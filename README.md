@@ -1,4 +1,4 @@
-# Arduino_Leonardo
+# Arduino-Leonardo
 
 # 免責事項
 PGMの利用によって生じた何らかのトラブル・損失・損害等の一切の責任を負いかねますのでご了承ください。
