@@ -1,15 +1,24 @@
 /**
  * PGM
  * そらとぶタイムアタック初級コース自動周回
+ * 使用インクルードライセンス
+ * NintendoSwitchControll：MIT
+ * © 2020 interimadd/takeutchi/kurimoun
+ * https://github.com/interimadd/NintendoSwitchControll/blob/master/LICENSE.txt
+ * 実行環境整備
+ * ①Switch本体ストレージにSVのデータがあることを確認する
+ * ②Switch本体ストレージに5GB以上の空きを用意する
+ * ③Arduino Leonardoおよび指定インクルードが使用可能であること
  * 実行手順
  * ①ループ上限は初期値無制限
- * ②使いたい場合はセーブ/終了処理の有効化※誤動作した場合のリスクが大きくなります
+ * ②使いたい場合はセーブ/スリープ処理の有効化※誤動作した場合のリスクが大きくなります
  * ③1セーブ間のループ上限/ループ上限の変更※初期値はそれぞれ100/1000
  * ④キャニオンエリア受付前でPGM実行
  * 配布元
  * https://github.com/Syumiru/Arduino-Leonardo
  * 開発者
  * Syumiru(https://twitter.com/PokeSyumiru)
+ * Special Thanks
  * セーブ機能提案
  * 修行僧様(https://twitter.com/s1140044)
  * 実行環境標準化のヒント提供

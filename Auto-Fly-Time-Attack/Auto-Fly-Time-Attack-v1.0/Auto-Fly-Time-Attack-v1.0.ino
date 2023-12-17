@@ -1,6 +1,10 @@
 /**
  * PGM
  * そらとぶタイムアタック初級コース自動周回
+ * 使用インクルードライセンス
+ * NintendoSwitchControll：MIT
+ * © 2020 interimadd/takeutchi/kurimoun
+ * https://github.com/interimadd/NintendoSwitchControll/blob/master/LICENSE.txt
  * 実行手順
  * ①ループ回数は初期値999回です。お好きに変更ください。
  * ②コーストスクエア受付前でPGM実行
@@ -16,6 +20,7 @@
  * 3.反社会的勢力や違法行為に関わる利用
  * 4.PGM自体やPGMがインストールされた物品をコンテンツ・商品として再配布・販売
  * 5.その他著作者が不適切と判断した場合
+ * また、加工の有無、または加工の多少で著作権の譲渡や移動はありません。
 */
 //使用インクルード
 #include <auto_command_util.h>
