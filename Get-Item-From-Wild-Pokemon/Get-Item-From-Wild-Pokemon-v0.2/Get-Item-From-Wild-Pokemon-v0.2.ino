@@ -19,7 +19,8 @@
  * ①ループ上限は初期値無制限
  * ②使いたい場合はセーブ/終了処理の有効化※誤動作した場合のリスクが大きくなります
  * ③1セーブ間のループ上限/ループ上限の変更※初期値はそれぞれ100/1000
- * ④1周目は戦闘画面からスタート
+ * ④発見状態（ポケモン頭上に！）にすると安定（多分）
+ * ⑤1周目は戦闘画面からスタート
  * 【配布元】
  * https://github.com/Syumiru/Arduino-Leonardo
  * 【開発者】
@@ -63,9 +64,9 @@ int MoveChoise;
 //わざ待機時間(たいあたり初回モーション読込に時間が掛かる場合があるっぽいので考慮する場合は+1秒)
 int MoveWaitTime = 15000;
 //1セーブ間のループ上限
-int SaveLmt = 304;
+int SaveLmt = 999;
 //ループ上限
-int LoopLmt = 304;
+int LoopLmt = 999;
 
 //起動時の動作（Arduinoにおいて記述必須）
 void setup() {
@@ -84,7 +85,7 @@ void loop() {
   //処理回数が上限に到達した場合
   if ( LoopCnt >= LoopLmt ) {
     //終了処理
-    End();
+    //End();
   }
 }
 
@@ -92,8 +93,6 @@ void loop() {
 void Main() {
   //1セーブ間のループ上限を指定
   for (int i = 0; i < SaveLmt; i++) {
-    //6秒wait(不意をついた場合に長めに時間が必要)
-    //delay(6000);
     //全てのわざを使用した場合
     if ( AllMoveCnt == MaxMove ) {
       //ポケモン回復
@@ -130,8 +129,8 @@ void Main() {
     LoopCnt++;
     //わざ使用回数をインクリメント
     AllMoveCnt++;
-    //対象ポケモンにボールを投げるためZRを22回押下(待機時間含む)
-    pushButton(Button::ZR, 500, 22);
+    //対象ポケモンにボールを投げるためZRを19回押下(待機時間含む)
+    pushButton(Button::ZR, 500, 19);
   }
 }
 
@@ -147,7 +146,6 @@ void CalcMoveLimit() {
 
 //PP回復
 void RecoveryPP() {
-  
   //下十字キーを2回押下しバッグにカーソルを合わせる
   pushHat(Hat::DOWN, 500, 2);
   //Aボタンでバッグを開く
@@ -169,39 +167,8 @@ void RecoveryPP() {
   pushHat(Hat::UP, 500, 2);
 }
 
-//PP回復（戦闘中に回復した方が安定する）
-void RecoveryPPField() {
-  //1.5秒wait
-  delay(1500);
-  //メインメニューを開く
-  pushButton(Button::X, 2000, 1);
-  
-  //PP回復
-  //右十字キーを押下しバッグにカーソルを合わせる
-  pushHat(Hat::RIGHT, 200, 1);
-  //Aボタンでバッグを開く
-  pushButton(Button::A, 1000, 1);
-  //AボタンでPPMAXを選択
-  pushButton(Button::A, 1000, 1);
-  //Aボタンでつかうを選択
-  pushButton(Button::A, 1000, 1);
-  //Aボタンで先頭ポケモンを選択
-  pushButton(Button::A, 2000, 1);
-  //Bボタンでテキストおくり
-  pushButton(Button::B, 1000, 1);
-  //Bボタンでバッグを閉じる
-  pushButton(Button::B, 1000, 1);
-
-  //Bボタンでメインメニュー画面へ戻る
-  pushButton(Button::B, 1000, 1);
-  //Bボタンでメインメニュー画面を閉じる
-  pushButton(Button::B, 1000, 1);
-
-}
-
 //セーブ処理
 void Save() {
-
   //メインメニューを開く
   pushButton(Button::X, 1000, 1);
   //レポートをRボタンで決定
