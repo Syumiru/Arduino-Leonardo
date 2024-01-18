@@ -39,8 +39,8 @@
  * 4.PGM自体やPGMがインストールされた物品をコンテンツ・商品として再配布・販売
  * 5.その他著作者が不適切と判断した場合
  * また、加工の有無、または加工の多少で著作権の譲渡や移動はありません。
-*/
-//使用インクルード
+ */
+// 使用インクルード
 #include <NintendoSwitchControlLibrary.h>
 
 //変数定義
@@ -118,7 +118,7 @@ void Main() {
     }
     else if ( AllMoveCnt == MaxMove123PP ) {
       MoveChoise = 3;
-      MoveWaitTime = 15000; // （急所/なつき急所でギリギリ処理続行されたことを確認済）
+      MoveWaitTime = 15000; // （急所でギリギリ処理続行されたことを確認済）
     }
     //下十字キーを押下しわざにカーソルを合わせる
     pushHat(Hat::DOWN, 750, MoveChoise);

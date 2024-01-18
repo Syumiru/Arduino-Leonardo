@@ -22,8 +22,8 @@
  * https://github.com/Syumiru/Arduino-Leonardo
  * 【開発者】
  * Syumiru(https://twitter.com/PokeSyumiru)
- * 【Special Thanks】
- * なし
+ * 【変更履歴】
+ * v1.0 初版作成
  * 【免責事項】
  * PGMの利用によって生じた何らかのトラブル・損失・損害等の一切の責任を負いかねますのでご了承ください。
  * PGMを利用する場合は、自己責任で行う必要があります。
