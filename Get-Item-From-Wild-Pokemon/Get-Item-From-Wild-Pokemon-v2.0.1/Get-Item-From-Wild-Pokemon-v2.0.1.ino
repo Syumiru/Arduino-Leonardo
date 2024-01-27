@@ -28,6 +28,10 @@
  * 【変更履歴】
  * v1.0 初版作成
  * v2.0 わざ「すりかえ」「トリック」を利用した形からとくせい「マジシャン」を利用した形に変更
+ * v2.0.1 入力漏れ防止処理追加
+ * 【既知の問題】
+ * 1000回実行したところ想定より十数回分のアイテムが不足していました。
+ * →v2.0.1により1000回に2回程度になったことを確認済
  * 【免責事項】
  * PGMの利用によって生じた何らかのトラブル・損失・損害等の一切の責任を負いかねますのでご了承ください。
  * PGMを利用する場合は、自己責任で行う必要があります。
@@ -105,7 +109,7 @@ void Main() {
       //リセットするためわざ選択をクリア
       MoveChoise = 0;
     }
-    //たたかうを選択するためAボタン    
+    //たたかうを選択するためAボタン
     pushButton(Button::A, 500, 1);
     //わざ使用回数により押下する回数を変更
     if ( AllMoveCnt == MaxMove1PP ) {
@@ -123,10 +127,9 @@ void Main() {
     //下十字キーを押下しわざにカーソルを合わせる
     pushHat(Hat::DOWN, 750, MoveChoise);
     //わざを選択するためAボタン(急所考慮する必要がある)
+    pushButton(Button::A, 500, 1);//入力抜けがあったので2回にしてみる
     pushButton(Button::A, MoveWaitTime, 1);
     //上十字キーを押下しにげるにカーソルを合わせる
-
-    
     pushHat(Hat::UP, 500, 1);
     //にげるを選択するためAボタン(入力抜けがあったので2回にしてみる)
     pushButton(Button::A, 0, 2);
@@ -152,17 +155,17 @@ void CalcMoveLimit() {
 //PP回復
 void RecoveryPP() {
   //下十字キーを2回押下しバッグにカーソルを合わせる
-  pushHat(Hat::DOWN, 500, 2);
+  pushHat(Hat::DOWN, 1500, 2);
   //Aボタンでバッグを開く
   pushButton(Button::A, 1000, 1);
   //上十字キーを1回押下しPPMAXにカーソルを合わせる
-  pushHat(Hat::UP, 500, 1);
+  pushHat(Hat::UP, 1000, 1);
   //AボタンでPPMAXを選択
   pushButton(Button::A, 1000, 1);
   //Aボタンでつかうを選択
   pushButton(Button::A, 1000, 1);
   //Aボタンで先頭ポケモンを選択
-  pushButton(Button::A, 0, 1);
+  pushButton(Button::A, 0, 2);
   //14秒待機
   delay(14000);
 }

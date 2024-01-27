@@ -125,8 +125,6 @@ void Main() {
     //わざを選択するためAボタン(急所考慮する必要がある)
     pushButton(Button::A, MoveWaitTime, 1);
     //上十字キーを押下しにげるにカーソルを合わせる
-
-    
     pushHat(Hat::UP, 500, 1);
     //にげるを選択するためAボタン(入力抜けがあったので2回にしてみる)
     pushButton(Button::A, 0, 2);
