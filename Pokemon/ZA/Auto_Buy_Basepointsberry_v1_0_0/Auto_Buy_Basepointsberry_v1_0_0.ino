@@ -30,6 +30,8 @@
 #include <NintendoSwitchControlLibrary.h>
 
 //変数定義
+//Switch1/2
+int Sleep = 1;
 //木の実を購入数
 int BuyLmt = 100;
 //十字キー下を押下する回数
@@ -80,12 +82,22 @@ void Buy() {
 
 //処理終了
 void End() {
+  if ( Sleep == 1 ) {
+    //HOMEボタンでswitchメニュー表示
+    pushButton(Button::HOME, 1000);
+    //下十字キーを押下しNintendo Switch Onlineにカーソルを合わせる
+    pushHat(Hat::DOWN, 200, 1);
+    //右十字キーを8回押下しスリープにカーソルを合わせる
+    pushHat(Hat::RIGHT, 200, 8);
+    //スリープを選択
+    pushButton(Button::A, 200, 3);
+  }
   //HOMEボタンでswitchメニュー表示
   pushButton(Button::HOME, 1000);
   //下十字キーを押下しNintendo Switch Onlineにカーソルを合わせる
   pushHat(Hat::DOWN, 200, 1);
   //左十字キーを1回押下しスリープにカーソルを合わせる
-  pushHat(Hat::REFT, 200, 1);
+  pushHat(Hat::LEFT, 200, 1);
   //スリープを選択
   pushButton(Button::A, 200, 2);
 }
