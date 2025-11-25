@@ -1,16 +1,15 @@
 /**
  * 【PGM】
- * ZA基礎ポイント木の実購入自動化
+ * 色違い厳選向けファストトラベル自動化
  * 【使用インクルードライセンス】
  * NintendoSwitchControlLibrary：MIT
  * © 2021 lefmarna/troter
  * https://github.com/lefmarna/NintendoSwitchControlLibrary/blob/master/LICENSE
  * 【実行環境整備】
- * ①ローズ6番地木の実屋の前
+ * ①ファストトラベル可能であること
  * 【実行手順】
- * ①目的の木の実にカーソルを合わせるために十字キーを何回押下する必要があるか指定
- * ②購入数を指定
- * ③メインコントローラを外しマイコン操作可能とする（メニュー画面を開いてコントローラを外すことを想定）
+ * ①各環境に併せて変数を変更
+ * ②メインコントローラを外しマイコン操作可能とする（メニュー画面を開いてコントローラを外すことを想定）
  * 【配布元】
  * https://github.com/Syumiru/Arduino-Leonardo
  * 【開発者】
@@ -32,11 +31,13 @@
 
 //変数定義
 //Switch1/2
-int Sleep = 1;
-//木の実を購入数
-int BuyLmt = 100;
-//十字キー下を押下する回数
-int DownCnt = 5;
+int Sleep = 2;
+//FT上限
+int FTLmt = 1000;
+//十字キー上を押下する回数
+int UPCnt = 1;
+//ロード待ち時間
+int WaitLoadTime = 4000;
 
 //起動時の動作（Arduinoにおいて記述必須）
 void setup() {
@@ -54,30 +55,17 @@ void loop() {
 
 //メイン処理
 void Main() {
-    //話しかける
+  for (int i = 0; i < FTLmt; i++) {
+    //＋ボタンでメニューを開く
+    pushButton(Button::PLUS, 300, 1);
+    //Yボタンで移動スポットを開く
+    pushButton(Button::Y, 300, 1);
+    //上十字キーで移動先にカーソルを合わせる
+    pushHat(Hat::UP, 300, UPCnt);
+    //Aボタンで移動先を指定
     pushButton(Button::A, 500, 1);
-    //「いかがですか？」テキスト送り
-    pushButton(Button::A, 300, 1);
-    //購入処理
-    Buy();
-}
-
-//購入処理
-void Buy() {
-  //購入上限までループ
-  for (int i = 0; i < BuyLmt; i++) {
-    //購入する木の実にカーソルを合わせるため下十字キー
-    pushHat(Hat::DOWN, 100, DownCnt);
-    //木の実を選択するためAボタン
-    pushButton(Button::A, 500, 1);
-    //「買いますか？」テキスト送り
-    pushButton(Button::A, 500, 1);
-    //「買います」するためAボタン
-    pushButton(Button::A, 500, 1);
-    //「ありがとう」テキスト送り
-    pushButton(Button::A, 500, 1);
-    //「他にも買っていくかい？」テキスト送り
-    pushButton(Button::A, 500, 1);
+    //Aボタンではいを押下
+    pushButton(Button::A,WaitLoadTime, 1);
   }
 }
 
