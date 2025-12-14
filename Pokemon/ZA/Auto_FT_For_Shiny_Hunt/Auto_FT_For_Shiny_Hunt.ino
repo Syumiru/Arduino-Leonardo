@@ -31,13 +31,15 @@
 
 //変数定義
 //Switch1/2
-int Sleep = 2;
+int Sleep = 1;
 //FT上限
-int FTLmt = 1000;
-//十字キー上を押下する回数
-int UPCnt = 1;
-//ロード待ち時間
-int WaitLoadTime = 4000;
+//Switch1だとWZ19を1周約15秒500周で2時間くらい
+//夜だと400では朝を迎える
+int FTLmt = 300;
+//十字キー下を押下する回数
+int DownCnt = 18;
+//ロード待ち時間(目安：Switch1→9.5秒だとダメなので10秒、Switch2→4秒)
+int WaitLoadTime = 10000;
 
 //起動時の動作（Arduinoにおいて記述必須）
 void setup() {
@@ -56,12 +58,26 @@ void loop() {
 //メイン処理
 void Main() {
   for (int i = 0; i < FTLmt; i++) {
+    //昼夜切替によるループ中断防止策
+    //ダメそうならベンチで休憩する処理を追加する
+    //時間帯限定ポケを考慮するなら長時間ループしないほうが良い
+    //カメラ起動していた場合に備え、Bボタンでカメラを閉じる
+    pushButton(Button::B, 100, 1);
     //＋ボタンでメニューを開く
     pushButton(Button::PLUS, 300, 1);
     //Yボタンで移動スポットを開く
+    //昼夜切替によりローリング発生→ローリング中なので－ボタンを受け付けずAボタンでゾーン進入→敵対状態のコンボでFTできずループ中断される懸念はあるかも
     pushButton(Button::Y, 300, 1);
-    //上十字キーで移動先にカーソルを合わせる
-    pushHat(Hat::UP, 300, UPCnt);
+    //－ボタンでカテゴリを開く
+    pushButton(Button::MINUS, 300, 1);
+    //上十字キーでゾーンにカーソルを合わせる
+    pushHat(Hat::UP, 100, 2);
+    //Aボタンでゾーンを選択
+    pushButton(Button::A, 300, 1);
+    //下十字キーでゾーンにカーソルを合わせる
+    //昼夜でバトルゾーンが増減するので下十字キーのみで操作し移動先指定ズレを防止
+    //50でズレ発生60で安定（Switch1）
+    pushHat(Hat::DOWN, 55, DownCnt);
     //Aボタンで移動先を指定
     pushButton(Button::A, 500, 1);
     //Aボタンではいを押下

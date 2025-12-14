@@ -5,12 +5,15 @@
  * NintendoSwitchControlLibrary：MIT
  * © 2021 lefmarna/troter
  * https://github.com/lefmarna/NintendoSwitchControlLibrary/blob/master/LICENSE
- * 【実行環境整備】
- * ①ローズ6番地木の実屋の前
+ * 【実行確認済環境】
+ * ①ローズ6番地木の実屋の前（Switch1）
+ * ②ローズポケセン西木の実屋の前（Switch1）
+ * ③WZ8番木の実屋の前（Switch2）
  * 【実行手順】
  * ①目的の木の実にカーソルを合わせるために十字キーを何回押下する必要があるか指定
  * ②購入数を指定
- * ③メインコントローラを外しマイコン操作可能とする（メニュー画面を開いてコントローラを外すことを想定）
+ * ③購入する種類数を指定
+ * ④メインコントローラを外しマイコン操作可能とする（メニュー画面を開いてコントローラを外すことを想定）
  * 【配布元】
  * https://github.com/Syumiru/Arduino-Leonardo
  * 【開発者】
@@ -32,9 +35,11 @@
 
 //変数定義
 //Switch1/2
-int Sleep = 1;
+int Switch = 2;
 //木の実を購入数
-int BuyLmt = 100;
+int BuyLmt = 900;
+//購入する種類数
+int BuyType = 6;
 //十字キー下を押下する回数
 int DownCnt = 5;
 
@@ -54,36 +59,65 @@ void loop() {
 
 //メイン処理
 void Main() {
+  if ( Switch == 1 ) {
     //話しかける
     pushButton(Button::A, 500, 1);
     //「いかがですか？」テキスト送り
     pushButton(Button::A, 300, 1);
+  }
+  else if  ( Switch == 2 ) {
+    //話しかける
+    pushButton(Button::A, 750, 1);
+    //「いかがですか？」テキスト送り
+    pushButton(Button::A, 750, 1);
+  }
+  //購入種類数までループ
+  for (int i = 0; i < BuyType; i++) {
     //購入処理
     Buy();
+    //1つ上のきのみを購入対象とする
+    DownCnt--;
+  }
 }
 
 //購入処理
 void Buy() {
   //購入上限までループ
   for (int i = 0; i < BuyLmt; i++) {
-    //購入する木の実にカーソルを合わせるため下十字キー
-    pushHat(Hat::DOWN, 100, DownCnt);
-    //木の実を選択するためAボタン
-    pushButton(Button::A, 500, 1);
-    //「買いますか？」テキスト送り
-    pushButton(Button::A, 500, 1);
-    //「買います」するためAボタン
-    pushButton(Button::A, 500, 1);
-    //「ありがとう」テキスト送り
-    pushButton(Button::A, 500, 1);
-    //「他にも買っていくかい？」テキスト送り
-    pushButton(Button::A, 500, 1);
+    if ( Switch == 1 ) {
+      //購入する木の実にカーソルを合わせるため下十字キー
+      pushHat(Hat::DOWN, 200, DownCnt);
+      //木の実を選択するためAボタン
+      pushButton(Button::A, 750, 1);
+      //「買いますか？」テキスト送り
+      pushButton(Button::A, 750, 1);
+      //「買います」するためAボタン
+      pushButton(Button::A, 750, 1);
+      //「ありがとう」テキスト送り
+      pushButton(Button::A, 750, 1);
+      //「他にも買っていくかい？」テキスト送り
+      pushButton(Button::A, 750, 1);
+    }
+    else if  ( Switch == 2 ) {
+      //購入する木の実にカーソルを合わせるため下十字キー
+      pushHat(Hat::DOWN, 100, DownCnt);
+      //木の実を選択するためAボタン
+      pushButton(Button::A, 500, 1);
+      //「買いますか？」テキスト送り
+      pushButton(Button::A, 500, 1);
+      //「買います」するためAボタン
+      pushButton(Button::A, 500, 1);
+      //「ありがとう」テキスト送り
+      pushButton(Button::A, 500, 1);
+      //「他にも買っていくかい？」テキスト送り
+      pushButton(Button::A, 500, 1);
+    }
   }
 }
 
 //処理終了
 void End() {
-  if ( Sleep == 1 ) {
+  if ( Switch == 1 ) {
     //HOMEボタンでswitchメニュー表示
     pushButton(Button::HOME, 1000);
     //下十字キーを押下しNintendo Switch Onlineにカーソルを合わせる
